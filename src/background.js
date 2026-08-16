@@ -2,7 +2,7 @@
 
 const MENU_ID = 'copy-image-to-clipboard';
 const CACHE_KEY = 'cache';
-const DEFAULT_MAX = 15;          // 保持件数（10〜20の中央あたり）
+const DEFAULT_MAX = 20;
 const MAX_ENTRY_BYTES = 2_000_000; // 1件あたりこれを超えたらキャッシュしない（コピーはする）
 
 chrome.runtime.onInstalled.addListener(() => {

@@ -1,6 +1,7 @@
 // popup.js — キャッシュの一覧と再コピー
 
 const CACHE_KEY = 'cache';
+const DEFAULT_MAX = 20;
 const grid = document.getElementById('grid');
 const empty = document.getElementById('empty');
 const status = document.getElementById('status');
@@ -9,7 +10,7 @@ const maxSelect = document.getElementById('max');
 init();
 
 async function init() {
-  const { [CACHE_KEY]: cache = [], maxItems = 15 } = await chrome.storage.local.get([CACHE_KEY, 'maxItems']);
+  const { [CACHE_KEY]: cache = [], maxItems = DEFAULT_MAX } = await chrome.storage.local.get([CACHE_KEY, 'maxItems']);
   maxSelect.value = String(maxItems);
   render(cache);
 
