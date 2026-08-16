@@ -1,0 +1,173 @@
+:root {
+  --bg: #14161a;
+  --surface: #1e2127;
+  --line: #2d3138;
+  --text: #e6e8ec;
+  --muted: #8d94a1;
+  --accent: #64d2c3;
+  --danger: #e0655c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 340px;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.5 system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 12px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+h1 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.limit {
+  color: var(--muted);
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 3px;
+  font: inherit;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 10px 12px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  /* 透過PNGを透過だと分かる状態で見せる */
+  background-color: #23262c;
+  background-image:
+    linear-gradient(45deg, #2b2f36 25%, transparent 25%, transparent 75%, #2b2f36 75%),
+    linear-gradient(45deg, #2b2f36 25%, transparent 25%, transparent 75%, #2b2f36 75%);
+  background-size: 10px 10px;
+  background-position: 0 0, 5px 5px;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.tile.copied::after {
+  content: "コピー";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 22, 26, 0.82);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  line-height: 14px;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: rgba(20, 22, 26, 0.75);
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.tile:hover .remove,
+.remove:focus-visible {
+  opacity: 1;
+}
+
+.remove:hover {
+  color: var(--danger);
+}
+
+.empty {
+  margin: 0;
+  padding: 24px 16px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-top: 1px solid var(--line);
+}
+
+#clear {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+#clear:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.status {
+  color: var(--accent);
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .remove {
+    transition: opacity 0.12s;
+  }
+}

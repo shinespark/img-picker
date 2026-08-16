@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>コピーした画像</h1>
+      <label class="limit">
+        保持
+        <select id="max">
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+        件
+      </label>
+    </header>
+
+    <div id="grid" class="grid"></div>
+
+    <p id="empty" class="empty" hidden>
+      ページ上の画像を右クリックして「画像をクリップボードにコピー」を選ぶと、ここに並びます。
+    </p>
+
+    <footer>
+      <button id="clear" type="button">すべて削除</button>
+      <span id="status" class="status" aria-live="polite"></span>
+    </footer>
+  </body>
+  <script src="popup.js"></script>
+</html>
