@@ -1,0 +1,89 @@
+{
+  "extDescription": {
+    "message": "右クリックした画像（img / CSS背景 / canvas / SVG）をPNGとしてクリップボードにコピーし、直近の数件をキャッシュします。",
+    "description": "Extension description shown in chrome://extensions and the store."
+  },
+  "actionTitle": {
+    "message": "コピーした画像",
+    "description": "Tooltip of the toolbar button, and the popup heading."
+  },
+  "menuCopyImage": {
+    "message": "画像をクリップボードにコピー",
+    "description": "Context menu item."
+  },
+
+  "toastCopying": {
+    "message": "コピー中…",
+    "description": "Toast shown while the image is being fetched and converted."
+  },
+  "toastCopied": {
+    "message": "コピーしました",
+    "description": "Toast shown after a successful copy."
+  },
+  "toastCopyFailed": {
+    "message": "コピーできませんでした: $1",
+    "description": "Toast shown when copying failed. $1 is the error message."
+  },
+
+  "errorImageNotFound": {
+    "message": "画像が見つかりません",
+    "description": "The right-clicked element did not contain an image."
+  },
+  "errorFetchFailed": {
+    "message": "取得に失敗しました",
+    "description": "Fallback error when the background fetch returns no reason."
+  },
+  "errorNotImage": {
+    "message": "画像ではありません（$1）",
+    "description": "The fetched resource was not an image. $1 is its MIME type."
+  },
+  "errorSvgRender": {
+    "message": "SVGを描画できません",
+    "description": "The SVG could not be drawn into a canvas."
+  },
+  "errorImageLoad": {
+    "message": "画像を読み込めません",
+    "description": "The image could not be loaded for the legacy copy path."
+  },
+  "errorClipboardDenied": {
+    "message": "クリップボードへの書き込みが拒否されました",
+    "description": "The browser rejected the clipboard write."
+  },
+
+  "popupLimitPrefix": {
+    "message": "保持",
+    "description": "Text before the number-of-items dropdown, as in \"Keep [20] items\"."
+  },
+  "popupLimitSuffix": {
+    "message": "件",
+    "description": "Text after the number-of-items dropdown, as in \"Keep [20] items\"."
+  },
+  "popupEmpty": {
+    "message": "ページ上の画像を右クリックして「画像をクリップボードにコピー」を選ぶと、ここに並びます。",
+    "description": "Shown when the cache is empty."
+  },
+  "popupClearAll": {
+    "message": "すべて削除",
+    "description": "Button that empties the cache."
+  },
+  "popupRemoveOne": {
+    "message": "この画像を削除",
+    "description": "Tooltip of the × button on a thumbnail."
+  },
+  "popupTileCopied": {
+    "message": "コピー",
+    "description": "Overlay label on a thumbnail right after it is copied. Keep it short."
+  },
+  "popupStatusCopied": {
+    "message": "コピーしました",
+    "description": "Status line after a successful re-copy."
+  },
+  "popupStatusCleared": {
+    "message": "削除しました",
+    "description": "Status line after the cache is emptied."
+  },
+  "popupStatusFailed": {
+    "message": "失敗: $1",
+    "description": "Status line after a failed re-copy. $1 is the error message."
+  }
+}

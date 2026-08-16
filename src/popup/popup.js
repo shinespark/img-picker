@@ -1,5 +1,7 @@
 // popup.js — キャッシュの一覧と再コピー
 
+const t = (key, ...subs) => chrome.i18n.getMessage(key, subs);
+
 const CACHE_KEY = 'cache';
 const DEFAULT_MAX = 20;
 const grid = document.getElementById('grid');
@@ -7,7 +9,16 @@ const empty = document.getElementById('empty');
 const status = document.getElementById('status');
 const maxSelect = document.getElementById('max');
 
+localize();
 init();
+
+// data-i18n を付けた要素にメッセージを流し込む（HTML では __MSG__ 置換が効かない）
+function localize() {
+  document.documentElement.lang = chrome.i18n.getUILanguage();
+  for (const el of document.querySelectorAll('[data-i18n]')) {
+    el.textContent = t(el.dataset.i18n);
+  }
+}
 
 async function init() {
   const { [CACHE_KEY]: cache = [], maxItems = DEFAULT_MAX } = await chrome.storage.local.get([CACHE_KEY, 'maxItems']);
@@ -25,7 +36,7 @@ async function init() {
   document.getElementById('clear').addEventListener('click', async () => {
     await chrome.storage.local.set({ [CACHE_KEY]: [] });
     render([]);
-    status.textContent = '削除しました';
+    status.textContent = t('popupStatusCleared');
   });
 }
 
@@ -38,6 +49,7 @@ function render(cache) {
     tile.type = 'button';
     tile.className = 'tile';
     tile.title = label(entry);
+    tile.dataset.copiedLabel = t('popupTileCopied');
 
     const img = document.createElement('img');
     img.src = entry.dataUrl;
@@ -48,7 +60,7 @@ function render(cache) {
     remove.type = 'button';
     remove.className = 'remove';
     remove.textContent = '×';
-    remove.title = 'この画像を削除';
+    remove.title = t('popupRemoveOne');
     tile.appendChild(remove);
 
     tile.addEventListener('click', (e) => {
@@ -76,10 +88,10 @@ async function copy(entry, tile) {
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     tile.classList.add('copied');
     setTimeout(() => tile.classList.remove('copied'), 700);
-    status.textContent = 'コピーしました';
+    status.textContent = t('popupStatusCopied');
     bumpToFront(entry.id);
   } catch (err) {
-    status.textContent = `失敗: ${err.message}`;
+    status.textContent = t('popupStatusFailed', err.message);
   }
 }
 

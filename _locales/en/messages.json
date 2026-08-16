@@ -1,0 +1,89 @@
+{
+  "extDescription": {
+    "message": "Copies the right-clicked image (img / CSS background / canvas / SVG) to the clipboard as PNG and keeps the most recent ones cached.",
+    "description": "Extension description shown in chrome://extensions and the store."
+  },
+  "actionTitle": {
+    "message": "Copied images",
+    "description": "Tooltip of the toolbar button, and the popup heading."
+  },
+  "menuCopyImage": {
+    "message": "Copy image to clipboard",
+    "description": "Context menu item."
+  },
+
+  "toastCopying": {
+    "message": "Copying…",
+    "description": "Toast shown while the image is being fetched and converted."
+  },
+  "toastCopied": {
+    "message": "Copied",
+    "description": "Toast shown after a successful copy."
+  },
+  "toastCopyFailed": {
+    "message": "Could not copy: $1",
+    "description": "Toast shown when copying failed. $1 is the error message."
+  },
+
+  "errorImageNotFound": {
+    "message": "No image found",
+    "description": "The right-clicked element did not contain an image."
+  },
+  "errorFetchFailed": {
+    "message": "Failed to fetch",
+    "description": "Fallback error when the background fetch returns no reason."
+  },
+  "errorNotImage": {
+    "message": "Not an image ($1)",
+    "description": "The fetched resource was not an image. $1 is its MIME type."
+  },
+  "errorSvgRender": {
+    "message": "Cannot render the SVG",
+    "description": "The SVG could not be drawn into a canvas."
+  },
+  "errorImageLoad": {
+    "message": "Cannot load the image",
+    "description": "The image could not be loaded for the legacy copy path."
+  },
+  "errorClipboardDenied": {
+    "message": "Writing to the clipboard was denied",
+    "description": "The browser rejected the clipboard write."
+  },
+
+  "popupLimitPrefix": {
+    "message": "Keep",
+    "description": "Text before the number-of-items dropdown, as in \"Keep [20] items\"."
+  },
+  "popupLimitSuffix": {
+    "message": "items",
+    "description": "Text after the number-of-items dropdown, as in \"Keep [20] items\"."
+  },
+  "popupEmpty": {
+    "message": "Right-click an image on a page and choose “Copy image to clipboard” to collect it here.",
+    "description": "Shown when the cache is empty."
+  },
+  "popupClearAll": {
+    "message": "Delete all",
+    "description": "Button that empties the cache."
+  },
+  "popupRemoveOne": {
+    "message": "Delete this image",
+    "description": "Tooltip of the × button on a thumbnail."
+  },
+  "popupTileCopied": {
+    "message": "Copied",
+    "description": "Overlay label on a thumbnail right after it is copied. Keep it short."
+  },
+  "popupStatusCopied": {
+    "message": "Copied",
+    "description": "Status line after a successful re-copy."
+  },
+  "popupStatusCleared": {
+    "message": "Deleted",
+    "description": "Status line after the cache is emptied."
+  },
+  "popupStatusFailed": {
+    "message": "Failed: $1",
+    "description": "Status line after a failed re-copy. $1 is the error message."
+  }
+}

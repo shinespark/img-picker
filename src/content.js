@@ -1,5 +1,7 @@
 // content.js — 右クリックした要素から画像を特定し、PNGにしてクリップボードへ
 
+const t = (key, ...subs) => chrome.i18n.getMessage(key, subs);
+
 let lastTarget = null;
 
 // contextmenu は capture で拾う。ページ側が stopPropagation していても取れる。
@@ -13,14 +15,14 @@ document.addEventListener(
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg?.type !== 'COPY_CLICKED_ELEMENT') return;
-  run(msg.srcUrl).catch((err) => toast(`コピーできませんでした: ${err.message}`, true));
+  run(msg.srcUrl).catch((err) => toast(t('toastCopyFailed', err.message), true));
 });
 
 async function run(srcUrlFromMenu) {
   const found = resolveImage(lastTarget) || (srcUrlFromMenu ? { kind: 'url', url: srcUrlFromMenu } : null);
-  if (!found) throw new Error('画像が見つかりません');
+  if (!found) throw new Error(t('errorImageNotFound'));
 
-  toast('コピー中…');
+  toast(t('toastCopying'));
 
   let sourceBlob;
   let originUrl = '';
@@ -28,7 +30,7 @@ async function run(srcUrlFromMenu) {
   if (found.kind === 'url') {
     originUrl = found.url;
     const res = await chrome.runtime.sendMessage({ type: 'FETCH_IMAGE', url: found.url });
-    if (!res?.ok) throw new Error(res?.error || '取得に失敗しました');
+    if (!res?.ok) throw new Error(res?.error || t('errorFetchFailed'));
     sourceBlob = await (await fetch(res.dataUrl)).blob();
   } else {
     sourceBlob = found.blob; // canvas / inline svg
@@ -37,7 +39,7 @@ async function run(srcUrlFromMenu) {
   const png = await toPngBlob(sourceBlob);
   await writeToClipboard(png);
 
-  toast('コピーしました');
+  toast(t('toastCopied'));
 
   chrome.runtime.sendMessage({
     type: 'CACHE_PUT',
@@ -139,7 +141,7 @@ function svgToBitmap(blob) {
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('SVGを描画できません'));
+      reject(new Error(t('errorSvgRender')));
     };
     img.src = url;
   });
@@ -179,12 +181,12 @@ function legacyCopy(pngBlob) {
       sel.removeAllRanges();
       holder.remove();
       URL.revokeObjectURL(url);
-      ok ? resolve() : reject(new Error('クリップボードへの書き込みが拒否されました'));
+      ok ? resolve() : reject(new Error(t('errorClipboardDenied')));
     };
     img.onerror = () => {
       holder.remove();
       URL.revokeObjectURL(url);
-      reject(new Error('画像を読み込めません'));
+      reject(new Error(t('errorImageLoad')));
     };
   });
 }
