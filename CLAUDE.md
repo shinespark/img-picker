@@ -10,6 +10,9 @@ Chrome 拡張（Manifest V3）。右クリックした画像を PNG に変換し
 
 ```
 manifest.json        拡張ルートはリポジトリルート。パスはすべてここ起点
+icons/
+  icon.svg           アイコンの原本。PNG はここから書き出す
+  icon{16,32,48,128}.png
 _locales/
   en/messages.json   既定ロケール
   ja/messages.json
@@ -45,6 +48,18 @@ src/
 - **src/popup/**: キャッシュ一覧の表示、再コピー、削除、保持件数の変更。ポップアップはユーザー操作直後かつフォーカスがあるため、フォールバック無しで `navigator.clipboard.write()` してよい。
 
 `content_scripts` は `all_frames: true` / `match_about_blank: true` / `run_at: document_start`。iframe 内の画像を拾うためで、background は `info.frameId` を指定して該当フレームにだけ送る。
+
+## アイコン
+
+原本は `icons/icon.svg` の 1 枚だけ。Chrome は SVG を受け付けないので、PNG を書き出して `manifest.json` の `icons` と `action.default_icon` から参照する。SVG を直したら PNG も書き出し直してコミットすること。
+
+ラスタライズは Chrome のヘッドレスで行う。ImageMagick の内蔵 SVG レンダラは `mask` を解釈できず切り抜きが潰れるため。4 倍で 1 枚描いてから各サイズへ縮小する（直接 16px で描くとアンチエイリアスが荒れる）。
+
+```sh
+cd icons && "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --hide-scrollbars --default-background-color=00000000 --force-device-scale-factor=4 --window-size=128,128 --screenshot=icon@4x.png "file://$PWD/icon.svg" && for s in 16 32 48 128; do magick icon@4x.png -resize ${s}x${s} -depth 8 -strip icon${s}.png; done && rm icon@4x.png
+```
+
+背景は透過で、図形は単色。山・太陽・カーソル周りの隙間は下地の色で塗らず `mask` で切り抜いてあるので、ライト・ダークどちらのツールバーでも成立する。色が popup の `--accent`（`#64d2c3`）より濃い `#3ab8a6` なのは、accent のままだとライトツールバーの 16px で沈むため。16px では要素が潰れるので、モチーフは「画像」と「カーソル」の 2 つに絞っている。
 
 ## コメント方針
 

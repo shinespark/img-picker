@@ -66,6 +66,9 @@ git clone https://github.com/shinespark/img-picker.git
 
 ```
 manifest.json          拡張のルート。パスはすべてここ起点
+icons/
+  icon.svg             アイコンの原本
+  icon*.png            SVG から書き出したもの（Chrome は SVG を受け付けないため）
 _locales/
   en/messages.json     既定ロケール
   ja/messages.json
