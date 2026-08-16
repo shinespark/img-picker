@@ -90,8 +90,9 @@ select {
   display: block;
 }
 
+/* 文言は popup.js が chrome.i18n から入れる（CSS 側では翻訳できないため） */
 .tile.copied::after {
-  content: "コピー";
+  content: attr(data-copied-label);
   position: absolute;
   inset: 0;
   display: grid;

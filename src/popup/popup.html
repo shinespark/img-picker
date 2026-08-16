@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title data-i18n="actionTitle"></title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <header>
-      <h1>コピーした画像</h1>
+      <h1 data-i18n="actionTitle"></h1>
       <label class="limit">
-        保持
+        <span data-i18n="popupLimitPrefix"></span>
         <select id="max">
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
           <option value="50">50</option>
         </select>
-        件
+        <span data-i18n="popupLimitSuffix"></span>
       </label>
     </header>
 
     <div id="grid" class="grid"></div>
 
-    <p id="empty" class="empty" hidden>
-      ページ上の画像を右クリックして「画像をクリップボードにコピー」を選ぶと、ここに並びます。
-    </p>
+    <p id="empty" class="empty" data-i18n="popupEmpty" hidden></p>
 
     <footer>
-      <button id="clear" type="button">すべて削除</button>
+      <button id="clear" type="button" data-i18n="popupClearAll"></button>
       <span id="status" class="status" aria-live="polite"></span>
     </footer>
   </body>

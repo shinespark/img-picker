@@ -8,7 +8,7 @@ const MAX_ENTRY_BYTES = 2_000_000; // 1件あたりこれを超えたらキャ�
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: MENU_ID,
-    title: '画像をクリップボードにコピー',
+    title: chrome.i18n.getMessage('menuCopyImage'),
     // "image" だと <img> にしか出ないので all にして、拾えるかは content 側で判定する
     contexts: ['all'],
   });
@@ -50,7 +50,7 @@ async function fetchImage(url, referrer) {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const blob = await res.blob();
   if (!blob.type.startsWith('image/') && !/\.(png|jpe?g|gif|webp|avif|svg)(\?|$)/i.test(url)) {
-    throw new Error(`画像ではありません (${blob.type || 'unknown'})`);
+    throw new Error(chrome.i18n.getMessage('errorNotImage', blob.type || 'unknown'));
   }
   return { ok: true, dataUrl: await blobToDataUrl(blob), type: blob.type };
 }

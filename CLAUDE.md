@@ -10,6 +10,9 @@ Chrome 拡張（Manifest V3）。右クリックした画像を PNG に変換し
 
 ```
 manifest.json        拡張ルートはリポジトリルート。パスはすべてここ起点
+_locales/
+  en/messages.json   既定ロケール
+  ja/messages.json
 src/
   background.js      service worker
   content.js         全ページ・全フレームに注入
@@ -47,6 +50,13 @@ src/
 
 既存コードのコメントは「なぜそうしているか」だけを書いている（コードから自明な What は書かない）。この密度と方針に合わせる。
 
-## UI 文言
+## UI 文言（i18n）
 
-ユーザー向け文字列はすべて日本語。
+ユーザー向け文字列はコードに直接書かず、`_locales/<locale>/messages.json` に置いて `chrome.i18n.getMessage()` で取り出す。対応ロケールは英語（`default_locale: "en"`）と日本語のみで、表示されるのはブラウザの UI 言語に対応するもの。文言を足すときは **en / ja 両方に同じキー** を追加する（片方に無いキーは既定ロケールへフォールバックする）。
+
+- `manifest.json`: `__MSG_キー名__` で参照する。この置換が効くのは manifest だけ。
+- `src/background.js` / `src/content.js` / `src/popup/popup.js`: `chrome.i18n.getMessage(key, subs)`。埋め込みは `$1` で、`messages.json` 側の `placeholders` は使っていない。
+- `popup.html`: HTML には `__MSG__` 置換が無いので、文言を入れる要素に `data-i18n="キー名"` を付けて `popup.js` の `localize()` が `textContent` を流し込む。`<html lang>` も同時に設定する。
+- `popup.css`: CSS にも置換は無い。`.tile.copied::after` の文言は `content: attr(data-copied-label)` にして JS から渡している。
+
+`messages.json` の `description` は翻訳者向けなので英語で書く。
