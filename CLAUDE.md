@@ -10,6 +10,9 @@ Chrome 拡張（Manifest V3）。右クリックした画像を PNG に変換し
 
 ```
 manifest.json        拡張ルートはリポジトリルート。パスはすべてここ起点
+icons/
+  icon.svg           アイコンの原本。PNG はここから書き出す
+  icon{16,32,48,128}.png
 _locales/
   en/messages.json   既定ロケール
   ja/messages.json
@@ -45,6 +48,16 @@ src/
 - **src/popup/**: キャッシュ一覧の表示、再コピー、削除、保持件数の変更。ポップアップはユーザー操作直後かつフォーカスがあるため、フォールバック無しで `navigator.clipboard.write()` してよい。
 
 `content_scripts` は `all_frames: true` / `match_about_blank: true` / `run_at: document_start`。iframe 内の画像を拾うためで、background は `info.frameId` を指定して該当フレームにだけ送る。
+
+## アイコン
+
+原本は `icons/icon.svg` の 1 枚だけ。Chrome は SVG を受け付けないので、PNG を書き出して `manifest.json` の `icons` と `action.default_icon` から参照する。SVG を直したら PNG も書き出し直してコミットすること（ImageMagick を使用）。
+
+```sh
+cd icons && for s in 16 32 48 128; do magick -background none icon.svg -resize ${s}x${s} -depth 8 -strip icon${s}.png; done
+```
+
+背景を暗い角丸ベタにしてあるのは、Chrome のツールバーがライト・ダークどちらでも同じ見た目で成立させるため。16px では要素が潰れるので、モチーフは「画像」と「カーソル」の 2 つに絞っている。
 
 ## コメント方針
 

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <clipPath id="photo">
+      <rect x="14" y="18" width="82" height="74" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <rect width="128" height="128" rx="28" fill="#14161a"/>
+
+  <g clip-path="url(#photo)">
+    <rect x="14" y="18" width="82" height="74" fill="#64d2c3"/>
+    <path d="M 6 98 L 39 54 L 60 78 L 73 62 L 104 98 Z" fill="#14161a"/>
+    <circle cx="75" cy="40" r="9" fill="#14161a"/>
+  </g>
+
+  <g transform="translate(70 64) scale(1.25)">
+    <path d="M0 0 L0 36 L9.6 27.4 L15.4 41 L23.4 37.6 L17.6 24.4 L30 23 Z"
+          fill="#14161a" stroke="#14161a" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M0 0 L0 36 L9.6 27.4 L15.4 41 L23.4 37.6 L17.6 24.4 L30 23 Z" fill="#e6e8ec"/>
+  </g>
+</svg>
