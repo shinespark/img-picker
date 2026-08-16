@@ -6,7 +6,7 @@
   "permissions": ["contextMenus", "storage", "clipboardWrite"],
   "host_permissions": ["<all_urls>"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background.js"
   },
   "content_scripts": [
     {
@@ -14,11 +14,11 @@
       "all_frames": true,
       "match_about_blank": true,
       "run_at": "document_start",
-      "js": ["content.js"]
+      "js": ["src/content.js"]
     }
   ],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "src/popup/popup.html",
     "default_title": "コピーした画像"
   }
 }
