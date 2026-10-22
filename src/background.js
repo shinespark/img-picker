@@ -32,7 +32,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return true; // 非同期応答
   }
   if (msg?.type === 'CACHE_PUT') {
-    cachePut(msg.entry).then(() => sendResponse({ ok: true }), () => sendResponse({ ok: false }));
+    cachePut(withTabPage(msg.entry, sender.tab)).then(
+      () => sendResponse({ ok: true }),
+      () => sendResponse({ ok: false }),
+    );
     return true;
   }
 });
@@ -62,6 +65,18 @@ function blobToDataUrl(blob) {
     fr.onerror = () => reject(fr.error);
     fr.readAsDataURL(blob);
   });
+}
+
+// iframe 内でコピーされた場合、content script の location はフレームの URL になる。
+// 再訪したいのはユーザーが開いていたページなので、タブの URL を優先する。
+function withTabPage(entry, tab) {
+  if (!entry) return entry;
+  const pageUrl = tab?.url || entry.pageUrl || '';
+  return {
+    ...entry,
+    pageUrl: pageUrl.split('?')[0],
+    pageTitle: tab?.title || entry.pageTitle,
+  };
 }
 
 async function cachePut(entry) {
