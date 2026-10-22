@@ -46,8 +46,6 @@ async function run(srcUrlFromMenu) {
     entry: {
       dataUrl: await blobToDataUrl(png),
       sourceUrl: originUrl,
-      pageUrl: location.href,
-      pageTitle: document.title,
       width: found.width || 0,
       height: found.height || 0,
     },
