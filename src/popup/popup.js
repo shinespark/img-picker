@@ -72,8 +72,24 @@ function render(cache) {
       drop(entry.id);
     });
 
-    grid.appendChild(tile);
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.appendChild(tile);
+    if (entry.pageUrl) item.appendChild(sourceLink(entry.pageUrl));
+
+    grid.appendChild(item);
   }
+}
+
+function sourceLink(pageUrl) {
+  const a = document.createElement('a');
+  a.className = 'source';
+  a.href = pageUrl;
+  a.target = '_blank';
+  a.rel = 'noreferrer';
+  a.title = pageUrl;
+  a.textContent = pageUrl.replace(/^https?:\/\//, '');
+  return a;
 }
 
 function label(entry) {
