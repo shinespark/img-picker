@@ -75,7 +75,7 @@ function render(cache) {
     const item = document.createElement('div');
     item.className = 'item';
     item.appendChild(tile);
-    if (entry.pageUrl) item.appendChild(sourceLink(entry.pageUrl));
+    if (entry.pageUrl) item.appendChild(sourceLink(withoutQuery(entry.pageUrl)));
 
     grid.appendChild(item);
   }
@@ -94,7 +94,12 @@ function sourceLink(pageUrl) {
 
 function label(entry) {
   const size = entry.width && entry.height ? `${entry.width}×${entry.height} · ` : '';
-  return `${size}${entry.pageTitle || entry.pageUrl || ''}`;
+  return `${size}${entry.pageTitle || withoutQuery(entry.pageUrl || '')}`;
+}
+
+// background が保存時に落とすようになる前の履歴には、クエリ付きの URL が残っている
+function withoutQuery(url) {
+  return url.split('?')[0];
 }
 
 // ポップアップはユーザー操作の直後かつフォーカスもあるので、素直に書き込める
